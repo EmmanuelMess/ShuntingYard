@@ -4,6 +4,8 @@
   FAILED_TO_CHOOSE:	.asciiz "Deberia haber elejido una opcion del 0 al 3\n"
   LOADING_TREE:		.asciiz "Loading tree...\n"
 
+  SAVED_EXPR		.space	80
+
   TOK_MULT:		.word	0
   TOK_DIV:		.word   1
   TOK_SUM:		.word   2
@@ -14,6 +16,11 @@
 main:
   la $a0, INITIAL
   li $v0, 4
+  syscall
+
+  la $a0, SAVED_EXPR
+  li $a1, 79
+  li $v0, 8
   syscall
 
   la $a0, CHOOSE
