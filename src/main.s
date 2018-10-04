@@ -4,6 +4,12 @@
   FAILED_TO_CHOOSE:	.asciiz "Deberia haber elejido una opcion del 0 al 3\n"
   LOADING_TREE:		.asciiz "Loading tree...\n"
 
+  TOK_MULT:		.word	0
+  TOK_DIV:		.word   1
+  TOK_SUM:		.word   2
+  TOK_SUB:		.word   3
+  TOK_EQ:		.word   4
+
 .text
 main:
   la $a0, INITIAL
