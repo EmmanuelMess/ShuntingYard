@@ -2,7 +2,7 @@
   INITIAL:		.asciiz	"Ingrese operacion: "
   CHOOSE:		.asciiz	"\n0) Imprimir arbol\n1) Imprimir resultado\n2) Como notacion infija\n3) Como notacion prefija\nChoose option number: "
   FAILED_TO_CHOOSE:	.asciiz "Deberia haber elejido una opcion del 0 al 3\n"
-  LOADING_TREE:	.asciiz "Loading tree...\n"
+  LOADING_TREE:		.asciiz "Loading tree...\n"
 
 .text
 main:
