@@ -1,16 +1,16 @@
 #struct Token {
 #  uint_8 token_code
-#  /*24 bits padding*/
+#  uint_8 token_value
+#  /*16 bits padding*/
 #}
 
 create_token:
-  move $t0, $a0
-
   li $a0, 4		#sizeof(Token)
   li $v0, 9
   syscall
-  move $t1, $v0
+  move $t0, $v0
 
-  sb $t0, ($t1)
+  sb $a0, ($t0)
+  sb $a1, 1($t0)
 
   jr $ra

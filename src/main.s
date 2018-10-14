@@ -5,16 +5,19 @@
 			.align	2
   FAILED_TO_CHOOSE:	.asciiz "Deberia haber elejido una opcion del 0 al 3\n"
 			.align 2
+  FAILED_TO_PARSE:	.asciiz "Error parseando"
+			.align 2
   LOADING_TREE:		.asciiz "Loading tree...\n"
 			.align	2
 
-  SAVED_EXPR		.space	80
+  SAVED_EXPR:		.space	80
 
-  TOK_MULT:		.word	0
-  TOK_DIV:		.word   1
-  TOK_SUM:		.word   2
-  TOK_SUB:		.word   3
-  TOK_EQ:		.word   4
+  TOK_MULT:		.byte	0
+  TOK_DIV:		.byte   1
+  TOK_SUM:		.byte   2
+  TOK_SUB:		.byte   3
+  TOK_EQ:		.byte   4
+  TOK_NUM:		.byte	5
 			.align	2
 .text
 main:
@@ -28,6 +31,7 @@ main:
   syscall
 
   la $a0, CHOOSE
+  li $v0, 4
   syscall
 
   li $v0, 5
@@ -68,6 +72,13 @@ failed_to_choose:
   la $a0, FAILED_TO_CHOOSE
   li $v0, 4
   syscall
+  j end
+
+failed_to_parse:
+  la $a0, FAILED_TO_PARSE
+  li $v0, 4
+  syscall
+  j end
 
 end:
   li $v0, 10
