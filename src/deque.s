@@ -1,16 +1,17 @@
-#struct Queue {
+#struct Deque {
 #  uint_32 size
-#  Queue *start
-#  Queue *end
+#  Deque *front
+#  Deque *back
 #}
 
 #struct Node {
-#  Queue *next
+#  Node *last
+#  Node *next
 #  Token *tok
 #}
 
-create_queue:
-  li $a0, 12		#sizeof(Queue)
+create_deque:
+  li $a0, 12		#sizeof(Deque)
   li $v0, 9
   syscall
   move $t0, $v0
@@ -24,24 +25,17 @@ create_queue:
 
   jr $ra
 
-push_queue:		(a0 Queue, a1 token)
+push_back_deque:
   move $t0, $a0
   
   lw $t1, ($t0)
-  addi $t1, $t1, 1
+  addiu $t1, $t1, 1
   sw $t1, ($a0)
-
+  
   li $a0, 8
   li $v0, 9
   syscall
   move $t1, $v0
 
-  beq $
+  
 
-  sw $a1, 4($t1)
-
-  lw $t2, 4($t0)
-
-  sw 
-
-  move 
