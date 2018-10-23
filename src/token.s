@@ -5,12 +5,15 @@
 #}
 
 create_token:
+  move $t0, $a0
+  move $t1, $a1
+
   li $a0, 4		#sizeof(Token)
   li $v0, 9
   syscall
-  move $t0, $v0
+  move $t2, $v0
 
-  sb $a0, ($t0)
-  sb $a1, 1($t0)
+  sb $t0, ($t2)
+  sb $t1, 1($t2)
 
   jr $ra
