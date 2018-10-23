@@ -101,5 +101,14 @@ return_null:
   jr $ra
 
 
-save_token:
-  #TODO function
+save_token:		#a0 stack a1 queue, a2 token
+  la $t0, TOK_NUM
+  lb $t0, ($t0)
+
+  lb $t1, ($a2)
+  beq $t0, $t1, token_is_number
+
+token_is_number:
+  move $a0, $a1
+  move $a1, $a2
+  jal push_queue
