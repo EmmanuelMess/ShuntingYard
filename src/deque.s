@@ -88,3 +88,10 @@ peek_back_deque:
   lw $v0, 8($t0)
 
   jr $ra
+
+peek_front_deque:
+  lw $t0, 4($a0)
+  lw $v0, 8($t0)
+
+  jr $ra
+

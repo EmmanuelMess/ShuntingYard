@@ -28,6 +28,13 @@ main:
   move $a1, $s2
   jal push_front_deque
 
+  move $a0, $s0
+  jal peek_front_deque
+  
+  move $a0, $v0
+  li $v0, 1
+  syscall
+
 end:
   li $v0, 10
   syscall
