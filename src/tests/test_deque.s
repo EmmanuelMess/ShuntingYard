@@ -1,19 +1,32 @@
 .text
 main:
   jal create_deque
-  move $t0, $v0
+  move $s0, $v0
 
-  li 
- 
+  la $t0, TOK_NUM 
+  lb $a0, ($t0)
+
+  li $a1, 10 
+
   jal create_token
-  move $t1, $v0
+  move $s1, $v0
 
 
-  move $a0, $t0
-  move $a1, $t1
+  move $a0, $s0
+  move $a1, $s1
   jal push_back_deque
 
+  la $t0, TOK_MULT
+  lb $a0, ($t0) 
   
+  li $a1, 0
+
+  jal create_token
+  move $s2, $v0
+
+  move $a0, $s0
+  move $a1, $s2
+  jal push_back_deque
 
 end:
   li $v0, 10
