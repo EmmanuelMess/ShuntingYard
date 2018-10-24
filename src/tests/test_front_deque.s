@@ -14,7 +14,7 @@ main:
 
   move $a0, $s0
   move $a1, $s1
-  jal push_back_deque
+  jal push_front_deque
 
   la $t0, TOK_MULT
   lb $a0, ($t0) 
@@ -26,7 +26,7 @@ main:
 
   move $a0, $s0
   move $a1, $s2
-  jal push_back_deque
+  jal push_front_deque
 
 end:
   li $v0, 10
