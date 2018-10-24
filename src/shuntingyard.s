@@ -6,11 +6,11 @@ create_shunting_yard:
   li $v0, 4
   syscall
 
-  jal create_stack
-  move $s0, $v0		#$t0 contains stack
+  jal create_deque
+  move $s0, $v0		#s0 contains stack
 
-  jal create_queue
-  move $s1, $v0		#$t1 contains queue
+  jal create_deque
+  move $s1, $v0		#s1 contains queue
 
   la $s2, SAVED_EXPR
   lb $s3, ($s2)
@@ -66,26 +66,31 @@ match_fail:
 return_token_mult:
   la $t0, TOK_MULT
   lb $a0, ($t0)
+  li $a1, 0
   jal create_token
   jr $ra
 return_token_div:
   la $t0, TOK_DIV
   lb $a0, ($t0)
+  li $a1, 0
   jal create_token
   jr $ra
 return_token_sum:
   la $t0, TOK_SUM
   lb $a0, ($t0)
+  li $a1, 0
   jal create_token
   jr $ra
 return_token_sub:
   la $t0, TOK_SUB
   lb $a0, ($t0)
+  li $a1, 0
   jal create_token
   jr $ra
 return_token_eq:
   la $t0, TOK_EQ
   lb $a0, ($t0)
+  li $a1, 0
   jal create_token
   jr $ra
 return_token_num:
@@ -101,7 +106,7 @@ return_null:
   jr $ra
 
 
-save_token:		#a0 stack a1 queue, a2 token
+save_token:		#a0 stack, a1 queue, a2 token
   la $t0, TOK_NUM
   lb $t0, ($t0)
 
@@ -111,4 +116,4 @@ save_token:		#a0 stack a1 queue, a2 token
 token_is_number:
   move $a0, $a1
   move $a1, $a2
-  jal push_queue
+  jal push_back_deque
