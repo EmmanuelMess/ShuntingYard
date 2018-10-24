@@ -83,3 +83,8 @@ push_front_deque_c1:
 
   jr $ra
 
+peek_back_deque:
+  lw $t0, 8($a0)
+  lw $v0, 8($t0)
+
+  jr $ra
