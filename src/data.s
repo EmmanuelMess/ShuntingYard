@@ -12,11 +12,11 @@
 
   SAVED_EXPR:           .space  80
 
-  TOK_MULT:             .byte   0
-  TOK_DIV:              .byte   1
-  TOK_SUM:              .byte   2
-  TOK_SUB:              .byte   3
-  TOK_EQ:               .byte   4
-  TOK_NUM:              .byte   5
+  TOK_MULT:             .byte   3
+  TOK_DIV:              .byte   3
+  TOK_SUM:              .byte   4
+  TOK_SUB:              .byte   4
+  TOK_EQ:               .byte   14
+  TOK_NUM:              .byte   0
                         .align  2
 
