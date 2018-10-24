@@ -115,3 +115,24 @@ c0_pop_back_deque:
   sw $0, 4($t2)
 
   jr $ra
+
+pop_front_deque:
+  move $t0, $a0
+
+  lw $t1, 4($t0)
+
+  lw $t2, ($t0)
+  addi $t2, $t2, -1
+  sw $t2, ($t0)
+
+  lw $t2, 4($t1)
+  sw $t2, 4($t0)
+
+  lw $t2, 4($t0)
+  bne $t2, $0, c0_pop_front_deque
+  sw $0, 8($t0)
+c0_pop_front_deque:
+  sw $0, ($t2)
+
+  jr $ra
+

@@ -35,6 +35,9 @@ main:
   li $v0, 1
   syscall
 
+  move $a0, $s0
+  jal pop_front_deque
+
 end:
   li $v0, 10
   syscall
