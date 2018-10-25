@@ -136,3 +136,7 @@ c0_pop_front_deque:
 
   jr $ra
 
+size_deque:
+  lw $v0, ($a0)
+
+  jr $ra
