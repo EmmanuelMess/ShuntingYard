@@ -31,7 +31,29 @@ l0_continue:
   j l0_begin
 
 l0_end:
+l1_start_shunting_yard:
+  move $a0, $s0
+  jal size_deque
+  
+  beq $v0, $0, l1_end_shunting_yard
+  
+  move $a0, $s0
+  jal peek_back_deque
+  move $s2, $v0
+
+  move $a0, $s0
+  jal pop_back_deque
+  
+  move $a0, $s1
+  move $a1, $s2
+  jal push_back_deque
+
+  j l1_start_shunting_yard
+
+l1_end_shunting_yard:
   lw $ra ($sp)
+  addi $sp, $sp, 4
+
   jr $ra
 
 match:
@@ -107,13 +129,65 @@ return_null:
 
 
 save_token:		#a0 stack, a1 queue, a2 token
+  sub $sp $sp 20
+  sw $ra ($sp)
+  sw $s0, 4($sp)
+  sw $s1, 8($sp)
+  sw $s2, 12($sp)
+  sw $s3, 16($sp)
+
+  move $s0, $a0
+  move $s1, $a1
+  move $s2, $a2
+
   la $t0, TOK_NUM
   lb $t0, ($t0)
 
-  lb $t1, ($a2)
-  beq $t0, $t1, token_is_number
+  lb $s3, ($s2)
+  beq $t0, $s3, token_is_number
+
+token_is_operator:
+  move $a0, $s0
+  jal size_deque
+  beq $v0, $0, l0_end_save_token
+
+  move $a0, $s0
+  jal peek_back_deque
+  move $s3, $v0
+  
+  lb $t0, ($s3)
+
+  bge $s1, $t0, l0_end_save_token
+  move $a0, $s0
+  jal pop_back_deque
+  
+  move $a0, $s1
+  move $a1, $s3
+  jal push_back_deque
+
+  j token_is_operator
+
+l0_end_save_token:
+  move $a0, $s0
+  move $a1, $s2
+  jal push_back_deque
+
+  j end_save_token
 
 token_is_number:
   move $a0, $a1
   move $a1, $a2
   jal push_back_deque
+
+  j end_save_token
+
+end_save_token:
+  lw $ra ($sp)
+  lw $s0, 4($sp)
+  lw $s1, 8($sp)
+  lw $s2, 12($sp)
+  lw $s3, 16($sp)
+
+  addi $sp, $sp, 20
+
+  jr $ra
