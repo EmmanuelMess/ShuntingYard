@@ -22,7 +22,9 @@ l0_begin:
   jal match
   beq $v0, $0, l0_continue
 
-  move $a0, $v0
+  move $a0, $s0
+  move $a1, $s1
+  move $a2, $v0
   jal save_token
 
 l0_continue:
@@ -57,6 +59,9 @@ l1_end_shunting_yard:
   jr $ra
 
 match:
+  sub $sp $sp 4
+  sw $ra ($sp)
+
   li $t0, 32		# 32 = ' '
   beq $a0, $t0, return_null
 
@@ -90,31 +95,31 @@ return_token_mult:
   lb $a0, ($t0)
   li $a1, 0
   jal create_token
-  jr $ra
+  j end_match
 return_token_div:
   la $t0, TOK_DIV
   lb $a0, ($t0)
   li $a1, 0
   jal create_token
-  jr $ra
+  j end_match
 return_token_sum:
   la $t0, TOK_SUM
   lb $a0, ($t0)
   li $a1, 0
   jal create_token
-  jr $ra
+  j end_match
 return_token_sub:
   la $t0, TOK_SUB
   lb $a0, ($t0)
   li $a1, 0
   jal create_token
-  jr $ra
+  j end_match
 return_token_eq:
   la $t0, TOK_EQ
   lb $a0, ($t0)
   li $a1, 0
   jal create_token
-  jr $ra
+  j end_match
 return_token_num:
   sub $a1, $a0, 48	# 48 = '0'
 
@@ -122,9 +127,13 @@ return_token_num:
   lb $a0, ($t0)
 
   jal create_token
-  jr $ra
+  j end_match
 return_null:
   li $v0, 0
+  j end_match
+end_match:
+  lw $ra ($sp)
+  addi $sp, $sp, 4
   jr $ra
 
 
@@ -143,8 +152,8 @@ save_token:		#a0 stack, a1 queue, a2 token
   la $t0, TOK_NUM
   lb $t0, ($t0)
 
-  lb $s3, ($s2)
-  beq $t0, $s3, token_is_number
+  lb $t1, ($s2)
+  beq $t0, $t1, token_is_number
 
 token_is_operator:
   move $a0, $s0
@@ -157,7 +166,10 @@ token_is_operator:
   
   lb $t0, ($s3)
 
-  bge $s1, $t0, l0_end_save_token
+  lb $t1, ($s2)
+
+  bge $t0, $t1, l0_end_save_token
+  
   move $a0, $s0
   jal pop_back_deque
   
@@ -175,8 +187,8 @@ l0_end_save_token:
   j end_save_token
 
 token_is_number:
-  move $a0, $a1
-  move $a1, $a2
+  move $a0, $s1
+  move $a1, $s2
   jal push_back_deque
 
   j end_save_token
