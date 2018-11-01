@@ -56,6 +56,8 @@ l1_end_shunting_yard:
   lw $ra ($sp)
   addi $sp, $sp, 4
 
+  move $v0, $s1
+
   jr $ra
 
 match:
