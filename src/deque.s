@@ -111,6 +111,8 @@ pop_back_deque:
   lw $t2, 8($t0)
   bne $t2, $0, c0_pop_back_deque
   sw $0, 4($t0)
+  jr $ra
+
 c0_pop_back_deque:
   sw $0, 4($t2)
 
@@ -131,6 +133,7 @@ pop_front_deque:
   lw $t2, 4($t0)
   bne $t2, $0, c0_pop_front_deque
   sw $0, 8($t0)
+  jr $ra
 c0_pop_front_deque:
   sw $0, ($t2)
 
