@@ -36,6 +36,13 @@ print_tree:
   j end
 
 print_result:
+  jal create_shunting_yard
+  move $a0, $v0
+  jal rpn_parser
+  move $a0, $v0
+  
+  li $v0, 1
+  syscall
 
   j end
 

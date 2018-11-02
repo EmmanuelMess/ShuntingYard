@@ -1,4 +1,7 @@
 rpn_parser:
+  sub $sp $sp 4
+  sw $ra ($sp)
+
   move $s0, $a0
 
   jal create_deque
@@ -11,7 +14,7 @@ l0_begin_rpn_parser:
   beq $v0, $0, l0_end_rpn_parser
   
   move $a0, $s0
-  jal peek_back_deque
+  jal peek_front_deque
   
   la $t0, TOK_NUM
   lb $t0, ($t0)
@@ -20,6 +23,8 @@ l0_begin_rpn_parser:
   move $a0, $s1
   move $a1, $v0
   jal push_back_deque
+
+  j l0_continue_rpn_parse
   
 is_operator:
   move $a0, $s1
@@ -77,10 +82,10 @@ op_div:
 op_eq:
   beq $s2, $s3, eq
 neq:
-  li $s2, 1
+  li $s2, 0
   j op_end
 eq:
-  li $s2, 0
+  li $s2, 1
   j op_end
 
 op_end:
@@ -96,7 +101,7 @@ op_end:
 
 l0_continue_rpn_parse:
   move $a0, $s0
-  jal pop_back_deque
+  jal pop_front_deque
 
 l0_end_rpn_parser:
   move $a0, $s1
@@ -108,4 +113,8 @@ l0_end_rpn_parser:
   jal pop_back_deque
 
   move $v0, $s2
+
+  lw $ra ($sp)
+  addi $sp, $sp, 4
+
   jr $ra
