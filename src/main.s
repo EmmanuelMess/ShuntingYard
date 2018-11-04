@@ -47,7 +47,9 @@ print_result:
   j end
 
 print_infix:
-
+  li $v0, 4
+  la $a0, SAVED_EXPR
+  syscall
   j end
 
 print_prefix:
