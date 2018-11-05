@@ -29,7 +29,7 @@ l0_begin_rpn_parser:
 is_operator:
   move $a0, $s1
   jal peek_back_deque
-  lb $s2, 1($v0)
+  lb $s2, 1($v0) ##TODO $v0 overwrite?
 
   move $a0, $s1
   jal pop_back_deque

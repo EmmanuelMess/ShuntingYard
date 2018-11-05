@@ -53,6 +53,79 @@ print_infix:
   j end
 
 print_prefix:
+  jal create_shunting_yard
+  move $s0, $v0
+
+l0_begin_print_prefix:
+  move $a0, $s0
+  jal size_deque
+
+  beq $v0, $0, l0_end_print_prefix
+  
+  move $a0, $s0
+  jal peek_front_deque
+
+  la $t0, TOK_NUM
+  lb $t0, ($t0)
+  lb $t1, ($v0)
+  bne $t0, $t1, is_op
+  lb $a0, 1($v0)
+  addi $a0, $a0, 48		#48 = '0'
+  j l0_continue_print_prefix
+
+is_op:
+  la $t0, TOK_SUM
+  lb $t0, ($t0)
+  beq $t0, $t1, ope_sum
+
+  la $t0, TOK_SUB
+  lb $t0, ($t0)
+  beq $t0, $t1, ope_sub
+
+  la $t0, TOK_MULT
+  lb $t0, ($t0)
+  beq $t0, $t1, ope_mult
+
+  la $t0, TOK_DIV
+  lb $t0, ($t0)
+  beq $t0, $t1, ope_div
+
+  la $t0, TOK_EQ
+  lb $t0, ($t0)
+  beq $t0, $t1, ope_eq
+
+ope_sum:
+  li $a0, 43		# 43 = '+'
+  j l0_continue_print_prefix
+
+ope_sub:
+  li $a0, 45		# 45 = '-'
+  j l0_continue_print_prefix
+
+ope_mult:
+  li $a0, 42		# 42 = '*'
+  j l0_continue_print_prefix
+
+ope_div:
+  li $a0, 47		# 47 = '/'
+  j l0_continue_print_prefix
+
+ope_eq:
+  li $a0, 61		# 61 = '='
+  j l0_continue_print_prefix
+
+l0_continue_print_prefix:
+  li $v0, 11
+  syscall
+  
+  move $a0, $s0
+  jal pop_front_deque
+
+  j l0_begin_print_prefix
+l0_end_print_prefix:
+  li $v0, 11
+  li $a0, 0
+  syscall
 
   j end
 
