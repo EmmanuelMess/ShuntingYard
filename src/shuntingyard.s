@@ -64,6 +64,9 @@ match:
   sub $sp $sp 4
   sw $ra ($sp)
 
+  li $t0, 10		# 10 = '\n' 
+  beq $a0, $t0, return_null
+
   li $t0, 32		# 32 = ' '
   beq $a0, $t0, return_null
 
