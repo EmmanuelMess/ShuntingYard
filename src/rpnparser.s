@@ -27,9 +27,11 @@ l0_begin_rpn_parser:
   j l0_continue_rpn_parse
   
 is_operator:
+  move $s4, $t1
+
   move $a0, $s1
   jal peek_back_deque
-  lb $s2, 1($v0) ##TODO $v0 overwrite?
+  lb $s2, 1($v0)
 
   move $a0, $s1
   jal pop_back_deque
@@ -43,23 +45,23 @@ is_operator:
 
   la $t0, TOK_SUM
   lb $t0, ($t0)
-  beq $t0, $t1, op_sum
+  beq $t0, $s4, op_sum
 
   la $t0, TOK_SUB
   lb $t0, ($t0)
-  beq $t0, $t1, op_sub
+  beq $t0, $s4, op_sub
 
   la $t0, TOK_MULT
   lb $t0, ($t0)
-  beq $t0, $t1, op_mult
+  beq $t0, $s4, op_mult
 
   la $t0, TOK_DIV
   lb $t0, ($t0)
-  beq $t0, $t1, op_div
+  beq $t0, $s4, op_div
 
   la $t0, TOK_EQ
   lb $t0, ($t0)
-  beq $t0, $t1, op_eq
+  beq $t0, $s4, op_eq
 
 op_sum:
   add $s2, $s2, $s3
