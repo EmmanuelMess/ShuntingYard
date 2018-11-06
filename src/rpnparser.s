@@ -105,6 +105,8 @@ l0_continue_rpn_parse:
   move $a0, $s0
   jal pop_front_deque
 
+  j l0_begin_rpn_parser
+
 l0_end_rpn_parser:
   move $a0, $s1
   jal peek_back_deque
